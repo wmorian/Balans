@@ -14,7 +14,7 @@ namespace Balans.Controllers
     {
         private string path = @"C:\Projects\Balans\src\Balans\Database\database.json";
 
-        [HttpGet("{accountId:int}")]
+        [HttpGet("entities/{accountId:int}")]
         public IActionResult GetEntities(int accountId)
         {
             if (!this.ModelState.IsValid)
@@ -33,6 +33,33 @@ namespace Balans.Controllers
             }
 
             return this.Ok(entities);
+        }
+
+        [HttpGet("balance/{accountId:int}")]
+        public IActionResult GetBalance(int accountId)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            var lines = System.IO.File.ReadAllText(this.path);
+
+            IList<Entity> entities = new List<Entity>();
+
+            if (!string.IsNullOrWhiteSpace(lines))
+            {
+                var accounts = JsonConvert.DeserializeObject<List<Account>>(lines);
+                entities = accounts?.FirstOrDefault(a => a.Id == accountId).Entities.ToList();
+            }
+
+            float balance = 0;
+            foreach (var entity in entities)
+            {
+                balance += entity.Amount;
+            }
+
+            return this.Ok(balance);
         }
 
         [HttpPost]
