@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Balans.Migrations
 {
     [DbContext(typeof(AccountContext))]
-    [Migration("20190327195731_InitialCreate")]
+    [Migration("20190327201020_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace Balans.Migrations
 
             modelBuilder.Entity("Balans.Models.Entity", b =>
                 {
-                    b.HasOne("Balans.Models.Account")
+                    b.HasOne("Balans.Models.Account", "Account")
                         .WithMany("Entities")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade);

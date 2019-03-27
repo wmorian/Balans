@@ -47,7 +47,7 @@ namespace Balans.Migrations
 
             modelBuilder.Entity("Balans.Models.Entity", b =>
                 {
-                    b.HasOne("Balans.Models.Account")
+                    b.HasOne("Balans.Models.Account", "Account")
                         .WithMany("Entities")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade);
