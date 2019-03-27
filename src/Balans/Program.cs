@@ -19,6 +19,7 @@ namespace Balans
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseSetting("dbPath", @"C:\Projects\Balans\src\Balans\Database\database.json")
                 .UseStartup<Startup>();
     }
 }

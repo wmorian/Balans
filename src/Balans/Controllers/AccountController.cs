@@ -1,5 +1,6 @@
 ﻿using Balans.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,15 @@ namespace Balans.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        // TODO
-        private string path = @"C:\Projects\Balans\src\Balans\Database\database.json";
+        private readonly IConfiguration configuration;
+        private readonly string path;
+
+        public AccountController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+            this.path = this.configuration.GetSection("dbPath").Value;
+        }
+
 
         [HttpGet("entities/{accountId:int}")]
         public IActionResult GetEntities(int accountId)
@@ -23,18 +31,12 @@ namespace Balans.Controllers
                 return this.BadRequest(this.ModelState);
             }
 
-            var lines = System.IO.File.ReadAllText(this.path);
-
-            IList<Entity> entities = new List<Entity>();
-
-            if (!string.IsNullOrWhiteSpace(lines))
-            {
-                var accounts = JsonConvert.DeserializeObject<List<Account>>(lines);
-                entities = accounts?.FirstOrDefault(a => a.Id == accountId).Entities.ToList();
-            }
+            IList<Entity> entities = this.GetEntitiesFormDatabase(accountId);
 
             return this.Ok(entities);
         }
+
+        
 
         [HttpGet("balance/{accountId:int}")]
         public IActionResult GetBalance(int accountId)
@@ -44,21 +46,9 @@ namespace Balans.Controllers
                 return this.BadRequest(this.ModelState);
             }
 
-            var lines = System.IO.File.ReadAllText(this.path);
+            IList<Entity> entities = this.GetEntitiesFormDatabase(accountId);
 
-            IList<Entity> entities = new List<Entity>();
-
-            if (!string.IsNullOrWhiteSpace(lines))
-            {
-                var accounts = JsonConvert.DeserializeObject<List<Account>>(lines);
-                entities = accounts?.FirstOrDefault(a => a.Id == accountId).Entities.ToList();
-            }
-
-            float balance = 0;
-            foreach (var entity in entities)
-            {
-                balance += entity.Amount;
-            }
+            float balance = entities.Sum(e => e.Amount);
 
             return this.Ok(balance);
         }
@@ -71,6 +61,25 @@ namespace Balans.Controllers
                 return this.BadRequest(this.ModelState);
             }
 
+            this.SaveAccount(account);
+
+            return this.Ok();
+        }
+
+        private void SaveAccount(Account account)
+        {
+            IList<Account> accounts = GetAccountsFromDatabase();
+
+            accounts.Add(account);
+
+            var accountJson = JsonConvert.SerializeObject(accounts);
+
+
+            System.IO.File.WriteAllText(this.path, accountJson);
+        }
+
+        private IList<Account> GetAccountsFromDatabase()
+        {
             var lines = System.IO.File.ReadAllText(this.path);
 
             IList<Account> accounts;
@@ -83,16 +92,23 @@ namespace Balans.Controllers
             {
                 accounts = new List<Account>();
             }
-            
 
-            accounts.Add(account);
+            return accounts;
+        }
 
-            var accountJson = JsonConvert.SerializeObject(accounts);
+        private IList<Entity> GetEntitiesFormDatabase(int accountId)
+        {
+            var lines = System.IO.File.ReadAllText(this.path);
 
+            IList<Entity> entities = new List<Entity>();
 
-            System.IO.File.WriteAllText(this.path, accountJson);
+            if (!string.IsNullOrWhiteSpace(lines))
+            {
+                var accounts = JsonConvert.DeserializeObject<List<Account>>(lines);
+                entities = accounts?.FirstOrDefault(a => a.Id == accountId).Entities.ToList();
+            }
 
-            return this.Ok();
+            return entities;
         }
     }
 }
