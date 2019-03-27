@@ -53,7 +53,7 @@ namespace Balans.Controllers
             return this.Ok(balance);
         }
 
-        [HttpPost]
+        [HttpPost("createaccount")]
         public IActionResult CreateAccount([FromBody] Account account)
         {
             if (!this.ModelState.IsValid)
@@ -66,9 +66,38 @@ namespace Balans.Controllers
             return this.Ok();
         }
 
+        [HttpPost("addentity")]
+        public IActionResult AddEntity([FromBody] Entity entity)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            IList<Account> accounts = this.GetAccountsFromDatabase();
+
+            if (accounts.Count <= 0)
+            {
+                return this.UnprocessableEntity($"DB Empty.");
+            }
+            var account = accounts.FirstOrDefault(a => a.Id == entity.AccountId);
+
+            if (account == null)
+            {
+                return this.UnprocessableEntity($"Account with the Id {entity.AccountId} not found.");
+            }
+            account.Entities.Add(entity);
+
+            var accountJson = JsonConvert.SerializeObject(accounts);
+
+            System.IO.File.WriteAllText(this.path, accountJson);
+
+            return this.Ok();
+        }
+
         private void SaveAccount(Account account)
         {
-            IList<Account> accounts = GetAccountsFromDatabase();
+            IList<Account> accounts = this.GetAccountsFromDatabase();
 
             accounts.Add(account);
 
