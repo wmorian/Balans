@@ -12,6 +12,7 @@ namespace Balans.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
+        // TODO
         private string path = @"C:\Projects\Balans\src\Balans\Database\database.json";
 
         [HttpGet("entities/{accountId:int}")]

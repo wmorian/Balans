@@ -19,6 +19,7 @@ namespace Balans.Controllers
     [HttpPost]
     public void AddEntity([FromBody] Entity entity)
     {
+      //TODO
       var path = @"C:\Projects\Balans\src\Balans\Database\database.json";
 
       var lines = System.IO.File.ReadAllText(path);
