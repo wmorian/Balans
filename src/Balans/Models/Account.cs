@@ -10,7 +10,7 @@ namespace Balans.Models
     {
         public int Id { get; set; }
 
-        public string User { get; set; }
+        public string Username { get; set; }
 
         public ICollection<Entity> Entities { get; set; }
 

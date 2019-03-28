@@ -20,7 +20,7 @@ namespace Balans.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("User");
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Balans.Migrations
 {
     [DbContext(typeof(AccountContext))]
-    [Migration("20190327201020_InitialCreate")]
+    [Migration("20190328190707_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace Balans.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("User");
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 
