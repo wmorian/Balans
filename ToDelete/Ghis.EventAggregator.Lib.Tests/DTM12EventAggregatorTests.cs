@@ -1,10 +1,49 @@
 using System;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Ghis.EventAggregator.Lib.Tests
 {
     public class DTM12EventAggregatorTests
     {
+        /// <summary>
+        /// Selective subscription by using where clausel of linq.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task A_valid_message_is_invoked_on_the_supplied_selective_subscription()
+        {
+            // Arrange
+            int actualId = 0;
+            int expectedId = 50;
+            int total = 500;
+            var simpleEventArray = new SimpleEvent[total];
+            for (int k = 0; k < total; k++)
+            {
+                var eventToPushish = new SimpleEvent() { Id = k, Message = "PROFINET_DTM Nr." + k };
+                simpleEventArray[k] = eventToPushish;
+            }
+            string message = string.Empty;
+            var eventPublisher = new DTM12EventAggregator();
+
+            eventPublisher.GetEvent<SimpleEvent>()
+                .Where(se => se.Id == 50)
+                .Subscribe(se => actualId = se.Id);
+
+            // Act
+            int i = 0;
+            while (i < total)
+            {
+                await Task.Delay(100);
+                eventPublisher.Publish<SimpleEvent>(simpleEventArray[i]);
+                i++;
+            }
+
+            //Assert
+            Assert.Equal(actualId, expectedId);
+        }
+
         [Fact]
         public void A_valid_message_is_invoked_on_the_supplied_subscription()
         {
