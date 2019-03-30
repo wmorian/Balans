@@ -26,4 +26,10 @@ Using IEventAggregator in Prism looks strange and complex
 * Unsubscription:
 * Selective Subscription : by using simple linq.
 * Subscription on UI thread: .ObserveOnDispatcher()
+
+## References
+[LINQ - Query Operators](https://www.tutorialspoint.com/linq/linq_query_operators.htm)
+    * Projection Operators
+[Started with xUnit.net](https://xunit.net/)
+[Sample Xunit Tests](https://github.com/xunit/xunit/blob/master/test/test.xunit.assert/Asserts/CollectionAssertsTests.cs)
  
