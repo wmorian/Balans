@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Balans.Layer.DAO.Database;
 using System.IO;
+using Balans.Infrastructure.Web.WebSocketService.Extensions;
+using Balans.Infrastructure.Web.WebSocketService.Impls;
 
 namespace Balans
 {
@@ -47,18 +49,24 @@ namespace Balans
       });
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+      //Just a demo
+      services.AddWebSocketManager();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
     {
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
       }
+      app.UseWebSockets();
 
       app.UseStaticFiles();
       app.UseMvc();
+
+      app.UseWebSocketManager("/demo", serviceProvider.GetService<DemoMessageHandler>());
     }
   }
 }

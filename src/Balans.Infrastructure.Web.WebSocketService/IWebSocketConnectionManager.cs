@@ -7,6 +7,9 @@
   using System.Threading;
   using System.Threading.Tasks;
 
+  /// <summary>
+  /// A singleton factory class that creates and tracks websocket connections.
+  /// </summary>
   public interface IWebSocketConnectionManager
   {
     WebSocket GetSocketById(string id);

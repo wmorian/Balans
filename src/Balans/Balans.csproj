@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Balans.Infrastructure.Web.WebSocketService\Balans.Infrastructure.Web.WebSocketService.csproj" />
     <ProjectReference Include="..\Balans.Layer.DAO\Balans.Layer.DAO.csproj" />
     <ProjectReference Include="..\Balans.Layer.Entity\Balans.Layer.Entity.csproj" />
     <ProjectReference Include="..\Balans.Layer.REST\Balans.Layer.REST.csproj" />

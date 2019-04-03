@@ -18,7 +18,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{D489D780-2E9F-4FD1-A43E-ED4A35807114}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\Users\GhislainZeleu\eclipse-workspace\Udemy\AppArchitect.PNG = ..\..\Users\GhislainZeleu\eclipse-workspace\Udemy\AppArchitect.PNG
-		src\Balans.TodoComp\README.md = src\Balans.TodoComp\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balans.Layer.Entity", "src\Balans.Layer.Entity\Balans.Layer.Entity.csproj", "{7A9B7ACD-FFB2-4492-9CDC-29126FB7CD07}"
