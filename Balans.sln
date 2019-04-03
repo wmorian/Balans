@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balans.Layer.REST", "src\Ba
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balans.Layer.DAO", "src\Balans.Layer.DAO\Balans.Layer.DAO.csproj", "{CF323451-90B7-4951-9881-F8441D0441BF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{05427222-F07B-4B4B-860F-E2F2C8EC9124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balans.Infrastructure.Web.WebSocketService", "src\Balans.Infrastructure.Web.WebSocketService\Balans.Infrastructure.Web.WebSocketService.csproj", "{FDEC5A83-2774-40DF-9742-3226CA6819E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,10 @@ Global
 		{CF323451-90B7-4951-9881-F8441D0441BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF323451-90B7-4951-9881-F8441D0441BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF323451-90B7-4951-9881-F8441D0441BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDEC5A83-2774-40DF-9742-3226CA6819E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDEC5A83-2774-40DF-9742-3226CA6819E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDEC5A83-2774-40DF-9742-3226CA6819E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDEC5A83-2774-40DF-9742-3226CA6819E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,7 @@ Global
 		{7A9B7ACD-FFB2-4492-9CDC-29126FB7CD07} = {D489D780-2E9F-4FD1-A43E-ED4A35807114}
 		{68FC1B6A-A4CE-4173-95B1-53B09DF294F0} = {D489D780-2E9F-4FD1-A43E-ED4A35807114}
 		{CF323451-90B7-4951-9881-F8441D0441BF} = {D489D780-2E9F-4FD1-A43E-ED4A35807114}
+		{FDEC5A83-2774-40DF-9742-3226CA6819E6} = {05427222-F07B-4B4B-860F-E2F2C8EC9124}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14B42CC4-D7D5-4F9B-B8FD-667F32B1B581}

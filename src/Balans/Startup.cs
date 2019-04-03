@@ -33,12 +33,13 @@ namespace Balans
     {
       services.AddDbContext<AccountContext>(options => options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
 
+      //Just for demo should be removed
       services.AddDbContext<BalansContext>(options =>
       {
         var databaseFullPath = "/Database/GhisDB.db";
         if (!File.Exists(databaseFullPath))
         {
-          //@Ghislain: Todo  find ouit how to get db file inside the app.
+          //@Ghislain: Todo  find out how to get db file inside the app.
           var path = Path.Combine(this.hostingEnvironment.ContentRootPath, "bin//Debug//netcoreapp2.2");
           databaseFullPath = path + databaseFullPath;
         }
