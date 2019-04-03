@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+
+    <!-- Supports for NetStandard Entities nor asp.coreapp enitites: Provide Attributes like [Table], [Key]  -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <!-- Supports for MSBUILD Razor: Dot need here why?  -->
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <!-- Supports converting between XML and JSON and Create, parse, query and modify JSON using Json.NET's  -->
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+</Project>

@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Balans.Models
 {
-    public class Account
+  public class Account
+  {
+    public int Id { get; set; }
+
+    public string Username { get; set; }
+
+    public ICollection<Entity> Entities { get; set; }
+
+    public Account()
     {
-        public int Id { get; set; }
-
-        public string Username { get; set; }
-
-        public ICollection<Entity> Entities { get; set; }
-
-        public Account()
-        {
-            this.Entities = new Collection<Entity>();
-        }
+      this.Entities = new Collection<Entity>();
     }
+  }
 }

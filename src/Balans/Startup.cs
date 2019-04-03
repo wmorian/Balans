@@ -11,35 +11,53 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using Balans.Layer.DAO.Database;
+using System.IO;
 
 namespace Balans
 {
-    public class Startup
+  public class Startup
+  {
+    private IHostingEnvironment hostingEnvironment;
+
+    public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContext<AccountContext>(options => options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseStaticFiles();
-            app.UseMvc();
-        }
+      Configuration = configuration;
+      this.hostingEnvironment = hostingEnvironment;
     }
+
+    public IConfiguration Configuration { get; }
+
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+      services.AddDbContext<AccountContext>(options => options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
+
+      services.AddDbContext<BalansContext>(options =>
+      {
+        var databaseFullPath = "/Database/GhisDB.db";
+        if (!File.Exists(databaseFullPath))
+        {
+          //@Ghislain: Todo  find ouit how to get db file inside the app.
+          var path = Path.Combine(this.hostingEnvironment.ContentRootPath, "bin//Debug//netcoreapp2.2");
+          databaseFullPath = path + databaseFullPath;
+        }
+        options.UseSqlite("Data Source =" + databaseFullPath);
+      });
+
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+    }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+
+      app.UseStaticFiles();
+      app.UseMvc();
+    }
+  }
 }
