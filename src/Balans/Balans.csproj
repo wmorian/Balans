@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <!--Why??-->
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,16 +13,4 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Balans.Infrastructure.Web.WebSocketService\Balans.Infrastructure.Web.WebSocketService.csproj" />
-    <ProjectReference Include="..\Balans.Layer.DAO\Balans.Layer.DAO.csproj" />
-    <ProjectReference Include="..\Balans.Layer.Entity\Balans.Layer.Entity.csproj" />
-    <ProjectReference Include="..\Balans.Layer.REST\Balans.Layer.REST.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Database\GhisDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

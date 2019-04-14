@@ -4,8 +4,6 @@ using Balans.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Balans.Controllers
@@ -23,7 +21,6 @@ namespace Balans.Controllers
             this.configuration = configuration;
             this.path = this.configuration.GetSection("dbPath").Value;
         }
-
 
         [HttpGet("{user}")]
         public IActionResult GetAccount(string user)
