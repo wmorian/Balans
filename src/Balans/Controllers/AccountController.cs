@@ -4,6 +4,7 @@ using Balans.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Linq;
 
 namespace Balans.Controllers
@@ -31,6 +32,11 @@ namespace Balans.Controllers
             }
 
             var account = this.context.Accounts.Include(a => a.Entities).FirstOrDefault(a => a.Username == user);
+
+            if (account == null)
+            {
+                return this.NotFound(user);
+            }
 
             var entityDtos = account.Entities.Select(e => new EntityDto { Name = e.Name, Amount = e.Amount }).ToList();
 
@@ -87,15 +93,12 @@ namespace Balans.Controllers
                 return this.BadRequest(this.ModelState);
             }
 
-            //this.SaveAccount(account);
-
             if (this.context.Accounts.Any(a => a.Username == accountDto.Username))
             {
                 return this.Forbid($"{accountDto.Username} already exists.");
             }
 
-
-            var account = new Account { Username = accountDto.Username, /*Entities = accountDto.Entities*/ };
+            var account = new Account { Username = accountDto.Username, CreateTime = DateTime.Now };
             this.context.Accounts.Add(account);
             this.context.SaveChanges();
 
@@ -117,7 +120,7 @@ namespace Balans.Controllers
                 return this.NotFound("User not found.");
             }
 
-            var entity = new Entity { Name = entityDto.Name, Amount = entityDto.Amount };
+            var entity = new Entity { Name = entityDto.Name, Amount = entityDto.Amount, CreateTime = DateTime.Now };
 
             account.Entities.Add(entity);
 
